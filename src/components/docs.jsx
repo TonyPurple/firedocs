@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import Modale from './modal';
+import ModalComponent from './modal';
 
-export default function Docs() {
+export default function Docs({
+    database
+}) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     return (
@@ -15,7 +17,7 @@ export default function Docs() {
                 Add a Document
             </button>
 
-            <Modale
+            <ModalComponent
                 open={open}
                 setOpen={setOpen}
             />
