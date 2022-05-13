@@ -16,7 +16,8 @@ export default function Docs({
     const collectionRef = collection(database, 'docsData')
     const addData = () => {
       addDoc(collectionRef, {
-          title: title
+          title: title,
+          docsDesc: ''
       })
       .then(() => {
           alert('Data Added');
@@ -59,6 +60,7 @@ useEffect(() => {
                     return (
                         <div className='grid-child' onClick={() => getID(doc.id)}>
                             <p>{doc.title}</p>
+                            <div dangerouslySetInnerHTML={{ __html: doc.docsDesc }} />
                         </div>
                     )
                 })}
