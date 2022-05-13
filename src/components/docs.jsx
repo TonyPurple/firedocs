@@ -8,13 +8,15 @@ export default function Docs({
     const [title, setTitle] = useState('')
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const collectionRef = collection(database, 'docsData')
     const addData = () => {
       addDoc(collectionRef, {
           title: title
       })
       .then(() => {
-          alert('Data Added')
+          alert('Data Added');
+          handleClose()
       })
       .catch(() => {
           alert('Cannot add data')
