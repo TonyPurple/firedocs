@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ModalComponent from './modal';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot } from 'firebase/firestore';
 
 export default function Docs({
     database
 }) {
+    const isMounted = useRef()
     const [title, setTitle] = useState('')
     const [open, setOpen] = React.useState(false);
+    const [docsData, setDocsData] = useState([]);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const collectionRef = collection(database, 'docsData')
@@ -22,6 +24,21 @@ export default function Docs({
           alert('Cannot add data')
       })
   }
+  const getData = () => {
+    onSnapshot(collectionRef, (data) => {
+        setDocsData(data.docs.map((doc) => {
+            return {...doc.data(), id: doc.id}
+        }))
+    })
+}
+useEffect(() => {
+  if(isMounted.current){
+      return 
+  }
+
+  isMounted.current = true;
+  getData()
+}, [])
     return (
         <div className='docs-main'>
             <h1>Docs Clone</h1>
@@ -32,6 +49,15 @@ export default function Docs({
             >
                 Add a Document
             </button>
+            <div>
+                {docsData.map((doc) => {
+                    return (
+                        <div>
+                            <p>{doc.title}</p>
+                        </div>
+                    )
+                })}
+            </div>
 
             <ModalComponent
                 open={open}
