@@ -31,6 +31,9 @@ export default function Docs({
         }))
     })
 }
+const getID = (id) => {
+  console.log(id)
+}
 useEffect(() => {
   if(isMounted.current){
       return 
@@ -52,7 +55,7 @@ useEffect(() => {
             <div className='grid-main'>
                 {docsData.map((doc) => {
                     return (
-                        <div className='grid-child'>
+                        <div className='grid-child' onClick={() => getID(doc.id)}>
                             <p>{doc.title}</p>
                         </div>
                     )
