@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     updateDoc,
     collection,
@@ -26,10 +28,14 @@ export default function EditDocs({
                 docsDesc: docsDesc
             })
                 .then(() => {
-                    alert('Saved')
+                    toast.success('Document Saved', {
+                        autoClose: 2000
+                    })
                 })
                 .catch(() => {
-                    alert('Cannot Save')
+                    toast.error('Cannot Save Document', {
+                        autoClose: 2000
+                    })
                 })
         }, 1000)
         return () => clearTimeout(updateDocsData)
@@ -53,6 +59,7 @@ export default function EditDocs({
     }, [])
     return (
 <div className='editDocs-main'>
+<ToastContainer />
             <h1>{documentTitle}</h1>
             <div className='editDocs-inner'>
                 <ReactQuill
