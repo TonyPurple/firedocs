@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ModalComponent from './modal';
 import { addDoc, collection, onSnapshot } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 export default function Docs({
     database
 }) {
+    let navigate = useNavigate();
     const isMounted = useRef()
     const [title, setTitle] = useState('')
     const [open, setOpen] = React.useState(false);
@@ -32,7 +34,7 @@ export default function Docs({
     })
 }
 const getID = (id) => {
-  console.log(id)
+  navigate(`/editDocs/${id}`)
 }
 useEffect(() => {
   if(isMounted.current){
