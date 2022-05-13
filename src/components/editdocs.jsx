@@ -37,7 +37,7 @@ export default function EditDocs({
                         autoClose: 2000
                     })
                 })
-        }, 1000)
+        }, 1500)
         return () => clearTimeout(updateDocsData)
     }, [docsDesc])
 
@@ -58,8 +58,8 @@ export default function EditDocs({
         getData()
     }, [])
     return (
-<div className='editDocs-main'>
-<ToastContainer />
+        <div className='editDocs-main'>
+            <ToastContainer />
             <h1>{documentTitle}</h1>
             <div className='editDocs-inner'>
                 <ReactQuill

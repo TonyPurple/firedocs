@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 const style = {
@@ -40,7 +38,7 @@ export default function ModalComponent({
                         onChange={(event) => setTitle(event.target.value)}
                         value={title}
                     />
-        <div className='button-container'>
+                    <div className='button-container'>
                         <button
                             className='add-docs'
                             onClick={addData}

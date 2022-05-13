@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ModalComponent from './modal';
-import { addDoc, collection, onSnapshot } from 'firebase/firestore';
+import {
+    addDoc,
+    collection,
+    onSnapshot
+} from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 export default function Docs({
@@ -8,46 +12,47 @@ export default function Docs({
 }) {
     let navigate = useNavigate();
     const isMounted = useRef()
-    const [title, setTitle] = useState('')
     const [open, setOpen] = React.useState(false);
     const [docsData, setDocsData] = useState([]);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [title, setTitle] = useState('');
     const collectionRef = collection(database, 'docsData')
     const addData = () => {
-      addDoc(collectionRef, {
-          title: title,
-          docsDesc: ''
-      })
-      .then(() => {
-          alert('Data Added');
-          handleClose()
-      })
-      .catch(() => {
-          alert('Cannot add data')
-      })
-  }
-  const getData = () => {
-    onSnapshot(collectionRef, (data) => {
-        setDocsData(data.docs.map((doc) => {
-            return {...doc.data(), id: doc.id}
-        }))
-    })
-}
-const getID = (id) => {
-  navigate(`/editDocs/${id}`)
-}
-useEffect(() => {
-  if(isMounted.current){
-      return 
-  }
+        addDoc(collectionRef, {
+            title: title,
+            docsDesc: ''
+        })
+            .then(() => {
+                alert('Data Added');
+                handleClose()
+            })
+            .catch(() => {
+                alert('Cannot add data')
+            })
+    }
+    const getData = () => {
+        onSnapshot(collectionRef, (data) => {
+            setDocsData(data.docs.map((doc) => {
+                return { ...doc.data(), id: doc.id }
+            }))
+        })
+    }
 
-  isMounted.current = true;
-  getData()
-}, [])
+    const getID = (id) => {
+        navigate(`/editDocs/${id}`)
+    }
+    useEffect(() => {
+        if (isMounted.current) {
+            return
+        }
+
+        isMounted.current = true;
+        getData()
+    }, [])
     return (
         <div className='docs-main'>
-            <h1>Fire Docs</h1>
+            <h1>Docs Clone</h1>
 
             <button
                 className='add-docs'
@@ -65,7 +70,6 @@ useEffect(() => {
                     )
                 })}
             </div>
-
             <ModalComponent
                 open={open}
                 setOpen={setOpen}
