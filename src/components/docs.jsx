@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ModalComponent from './modal';
+import { addDoc, collection } from 'firebase/firestore';
 
 export default function Docs({
     database
@@ -7,9 +8,18 @@ export default function Docs({
     const [title, setTitle] = useState('')
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
+    const collectionRef = collection(database, 'docsData')
     const addData = () => {
-        
-    }
+      addDoc(collectionRef, {
+          title: title
+      })
+      .then(() => {
+          alert('Data Added')
+      })
+      .catch(() => {
+          alert('Cannot add data')
+      })
+  }
     return (
         <div className='docs-main'>
             <h1>Docs Clone</h1>
@@ -26,7 +36,7 @@ export default function Docs({
                 setOpen={setOpen}
                 title={title}
                 setTitle={setTitle}
-                onClick={addData}
+                addData={addData}
             />
         </div>
     )
