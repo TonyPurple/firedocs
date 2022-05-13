@@ -52,13 +52,15 @@ export default function EditDocs({
         getData()
     }, [])
     return (
-        <div>
+<div className='editDocs-main'>
             <h1>{documentTitle}</h1>
-
-            <ReactQuill
-                value={docsDesc}
-                onChange={getQuillData}
-            />
+            <div className='editDocs-inner'>
+                <ReactQuill
+                    className='react-quill'
+                    value={docsDesc}
+                    onChange={getQuillData}
+                />
+            </div>
         </div>
     )
 }
